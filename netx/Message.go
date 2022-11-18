@@ -131,7 +131,7 @@ type DataPack struct {
 //
 //	@Description:
 //	@receiver p
-//	@Author yuhao <yuhao@mini1.cn>
+//	@Author yuhao <154826195@qq.com>
 //	@Data 2022-11-01 10:05:56
 //	@param msg
 //	@return error
@@ -149,7 +149,7 @@ func (p *DataPack) Pack(command, msg []byte) error {
 //
 //	@Description:
 //	@receiver p
-//	@Author yuhao <yuhao@mini1.cn>
+//	@Author yuhao <154826195@qq.com>
 //	@Data 2022-11-01 10:10:17
 //	@param message
 //	@return error
@@ -190,7 +190,7 @@ func (p *DataPack) PackMessage(message IMessage) error {
 //
 //	@Description:
 //	@receiver p
-//	@Author yuhao <yuhao@mini1.cn>
+//	@Author yuhao <154826195@qq.com>
 //	@Data 2022-11-01 12:32:00
 //	@return *message
 //	@return error
