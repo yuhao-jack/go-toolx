@@ -11,7 +11,7 @@ import (
 // IsBlank
 //
 //	@Description: 判断入参是否是零值
-//	@Author yuhao <yuhao@mini1.cn>
+//	@Author yuhao <154826195@qq.com>
 //	@Data 2022-11-01 09:56:43
 //	@param i
 //	@return bool
@@ -37,7 +37,7 @@ func IsBlank(i interface{}) bool {
 // IfOr
 //
 //	@Description: 模拟三目运算
-//	@Author yuhao <yuhao@mini1.cn>
+//	@Author yuhao <154826195@qq.com>
 //	@Data 2022-11-01 09:58:24
 //	@param condition
 //	@param a
@@ -56,7 +56,7 @@ func IfOr[T any](condition bool, a, b T) T {
 //	 @Description: 	获取变量的字符串值
 //						浮点型 3.0将会转换成字符串3, "3"
 //						非数值或字符类型的变量将会被转换成JSON格式字符串
-//	 @Author yuhao <yuhao@mini1.cn>
+//	 @Author yuhao <154826195@qq.com>
 //	 @Data 2022-11-01 10:00:38
 //	 @param value
 //	 @return string
@@ -116,7 +116,7 @@ func StrVal(value interface{}) string {
 // CheckRecover
 //
 //	@Description:  检测 recover并打印错误 stack
-//	@Author yuhao <yuhao@mini1.cn>
+//	@Author yuhao <154826195@qq.com>
 //	@Data 2022-11-01 10:03:55
 //	@return string
 func CheckRecover() string {
