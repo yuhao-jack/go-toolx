@@ -16,7 +16,7 @@ const (
 // CreateTCPListener
 //
 //	@Description: 创建tcp监听对象
-//	@Author yuhao <yuhao@mini1.cn>
+//	@Author yuhao <154826195@qq.com>
 //	@Data 2022-11-02 11:06:23
 //	@param addr 要监听的地址
 //	@return *net.TCPListener tcp监听对象
@@ -36,7 +36,7 @@ func CreateTCPListener(addr string) (*net.TCPListener, error) {
 // CreateTcpConn
 //
 //	@Description:  创建tcp链接
-//	@Author yuhao <yuhao@mini1.cn>
+//	@Author yuhao <154826195@qq.com>
 //	@Data 2022-11-02 11:07:13
 //	@param addr
 //	@return *net.TCPConn
@@ -56,7 +56,7 @@ func CreateTcpConn(addr string) (*net.TCPConn, error) {
 // Join2Conn
 //
 //	@Description: 交换两个链接的IO
-//	@Author yuhao <yuhao@mini1.cn>
+//	@Author yuhao <154826195@qq.com>
 //	@Data 2022-11-02 11:07:29
 //	@param local
 //	@param remote
@@ -68,7 +68,7 @@ func Join2Conn(local *net.TCPConn, remote *net.TCPConn) {
 // joinConn
 //
 //	@Description: 交互io
-//	@Author yuhao <yuhao@mini1.cn>
+//	@Author yuhao <154826195@qq.com>
 //	@Data 2022-11-02 11:08:03
 //	@param local
 //	@param remote
