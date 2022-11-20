@@ -3,6 +3,7 @@ package lru_test
 import (
 	"fmt"
 	"github.com/yuhao-jack/go-toolx/algorithm/cache/lru"
+	"github.com/yuhao-jack/go-toolx/fun"
 	"testing"
 )
 
@@ -44,5 +45,6 @@ func TestLru1(t *testing.T) {
 		Age:  15,
 		Sex:  "男",
 	})
-	fmt.Printf("%v\n", lruCache.Get("A"))
+	ok, user := lruCache.Get("A")
+	fmt.Printf("%v\n", fun.IfOr(ok, user, nil))
 }
