@@ -52,15 +52,18 @@ func (l *LfuCache[K, V]) Put(key K, val V) {
 //	@Description: 查询缓存
 //	@receiver l
 //	@param key 缓存key
-//	@return V 缓存的val 不存在时返回false和V的零值
-func (l *LfuCache[K, V]) Get(key K) (bool, V) {
+//	@return V 缓存的val 不存在时返回V的零值
+func (l *LfuCache[K, V]) Get(key K, defaultVal ...V) V {
 	v, ok := l.cache[key]
 	if !ok {
+		if len(defaultVal) > 0 {
+			return defaultVal[0]
+		}
 		var v V
-		return false, v
+		return v
 	}
 	l.addHitCount(key)
-	return ok, v
+	return v
 }
 
 // removeElement
