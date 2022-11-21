@@ -1,6 +1,13 @@
 package lfu
 
-import "time"
+import (
+	"sort"
+	"time"
+)
+
+type K interface {
+	comparable
+}
 
 type LfuCache[K comparable, V any] struct {
 	capcity int
@@ -71,19 +78,24 @@ func (l *LfuCache[K, V]) Get(key K, defaultVal ...V) V {
 //	@Description: 删除元素
 //	@receiver l
 func (l *LfuCache[K, V]) removeElement() {
-	var min *HitRate[K]
+	var hArr []*HitRate[K]
 	for _, h := range l.count {
-		if min == nil {
-			min = h
-			continue
-		}
-		if h.lastTime < min.lastTime {
-			min = h
-		}
+		hArr = append(hArr, h)
 	}
-	if min != nil {
-		delete(l.cache, min.key)
-		delete(l.count, min.key)
+	//  先按照命中次数排序
+	//  命中次数相同再按照时间排序
+	sort.Slice(hArr, func(i, j int) bool {
+		if hArr[i].hitCount < hArr[j].hitCount {
+			return true
+		}
+		if hArr[i].hitCount > hArr[j].hitCount {
+			return false
+		}
+		return hArr[i].lastTime < hArr[j].lastTime
+	})
+	if len(hArr) > 0 {
+		delete(l.cache, hArr[0].key)
+		delete(l.count, hArr[0].key)
 	}
 
 }
