@@ -93,6 +93,18 @@ func (c *ConcurrentMap[K, V]) Each(f func(key K, val V)) {
 	}
 }
 
+// Remove
+//
+//	@Description:
+//	@receiver c
+//	@param key
+func (c *ConcurrentMap[K, V]) Remove(key K) {
+	shard := c.GetShard(key)
+	shard.Lock()
+	delete(shard.items, key)
+	shard.Unlock()
+}
+
 var Prime = 16777619
 var OffsetBasis = 2166136261
 
