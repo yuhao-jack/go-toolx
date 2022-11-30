@@ -13,7 +13,7 @@ type LruCache[K comparable, V any] struct {
 	Head, Tail *LruNode[K, V] //头尾节点
 }
 
-// NewLruCache[K comparable, V any]
+// NewLruCache [K comparable, V any]
 //
 //	@Description: 创建缓存对象
 //	@param cap 缓存的数量

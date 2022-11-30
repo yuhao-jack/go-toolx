@@ -13,3 +13,10 @@
 [点我查看LFU算法实现](./lfu)
 
 [点我查看LFU算法示例](./test/lfu/lfu_test.go)
+
+
+#### FIFO算法
+
+[点我查看LFU算法实现](./fifo)
+
+[点我查看LFU算法示例](./test/fifo/fifo_test.go)
