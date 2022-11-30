@@ -17,6 +17,6 @@
 
 #### FIFO算法
 
-[点我查看LFU算法实现](./fifo)
+[点我查看FIFO算法实现](./fifo)
 
-[点我查看LFU算法示例](./test/fifo/fifo_test.go)
+[点我查看FIFO算法示例](./test/fifo/fifo_test.go)
