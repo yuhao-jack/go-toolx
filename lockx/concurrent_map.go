@@ -83,7 +83,7 @@ func (c *ConcurrentMap[K, V]) Get(key K, defaultVal ...V) V {
 //	@Description:
 //	@receiver c
 //	@param f
-func (c *ConcurrentMap[K, V]) Each(f func(K, V)) {
+func (c *ConcurrentMap[K, V]) Each(f func(key K, val V)) {
 	for _, c2 := range *c {
 		c2.Lock()
 		for k, v := range c2.items {
