@@ -12,7 +12,7 @@ type ConcurrentMapShared[K comparable, V any] struct {
 	items map[K]V
 }
 
-var ShardCount = runtime.NumCPU()
+var ShardCount = runtime.NumCPU() * 8
 
 // ConcurrentMap 分成ShardCount个分片的map
 type ConcurrentMap[K comparable, V any] []*ConcurrentMapShared[K, V]
