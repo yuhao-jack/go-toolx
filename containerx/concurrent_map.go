@@ -1,4 +1,4 @@
-package lockx
+package containerx
 
 import (
 	"reflect"
