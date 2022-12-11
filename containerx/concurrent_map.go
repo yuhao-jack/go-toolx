@@ -56,19 +56,19 @@ func (c *ConcurrentMap[K, V]) Set(key K, val V) {
 //	@param key
 //	@param defaultVal
 //	@return V
-func (c *ConcurrentMap[K, V]) Get(key K, defaultVal ...V) V {
+func (c *ConcurrentMap[K, V]) Get(key K, defaultVal ...V) (V, bool) {
 	shard := c.GetShard(key)
 	shard.RLock()
 	defer shard.RUnlock()
 	val, ok := shard.items[key]
 	if !ok {
 		if len(defaultVal) > 0 {
-			return defaultVal[0]
+			return defaultVal[0], false
 		}
 		var v V
-		return v
+		return v, false
 	}
-	return val
+	return val, true
 }
 
 // Each
