@@ -1,7 +1,6 @@
 package containerx
 
 import (
-	"reflect"
 	"runtime"
 	"sync"
 	"unsafe"
@@ -33,14 +32,8 @@ func NewConcurrentMap[K comparable, V any]() *ConcurrentMap[K, V] {
 //	@return *ConcurrentMapShared[K
 //	@return V]
 func (c *ConcurrentMap[K, V]) GetShard(key K) *ConcurrentMapShared[K, V] {
-	var bytes []byte
-	if reflect.TypeOf(key).Kind() != reflect.Ptr {
-		bytes = *(*[]byte)(unsafe.Pointer(&key))
-	} else {
-		pointer := reflect.ValueOf(key).Pointer()
-		bytes = *(*[]byte)(unsafe.Pointer(pointer))
-	}
-	return (*c)[fnv32(bytes)%ShardCount]
+	u := c.hash(key) % uintptr(ShardCount)
+	return (*c)[int(u)]
 }
 
 // Set
@@ -105,14 +98,36 @@ func (c *ConcurrentMap[K, V]) Remove(key K) {
 	shard.Unlock()
 }
 
-var Prime = 16777619
-var OffsetBasis = 2166136261
+// hash
+//
+//	@Description: 这里的hash方法是从一个帖子中找到的，测试过还不错
+//	@See https://blog.csdn.net/weixin_45583158/article/details/106894015
+//	@receiver c
+//	@Author yuhao <yuhao@mini1.cn>
+//	@Data 2022-12-05 17:25:42
+//	@param key
+//	@return uintptr
+func (c *ConcurrentMap[K, V]) hash(key K) uintptr {
+	var m interface{} = make(map[K]struct{})
+	hf := (*mh)(*(*unsafe.Pointer)(unsafe.Pointer(&m))).hf
+	return hf(unsafe.Pointer(&key), 0)
+}
 
-func fnv32(src []byte) int {
-	hash := OffsetBasis
-	for _, b := range src {
-		hash ^= int(b)
-		hash *= Prime
-	}
-	return hash
+// mh is an inlined combination of runtime._type and runtime.maptype
+type mh struct {
+	_  uintptr
+	_  uintptr
+	_  uint32
+	_  uint8
+	_  uint8
+	_  uint8
+	_  uint8
+	_  func(unsafe.Pointer, unsafe.Pointer) bool
+	_  *byte
+	_  int32
+	_  int32
+	_  unsafe.Pointer
+	_  unsafe.Pointer
+	_  unsafe.Pointer
+	hf func(unsafe.Pointer, uintptr) uintptr
 }
