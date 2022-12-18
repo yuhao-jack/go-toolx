@@ -38,15 +38,17 @@ func (c *ConcurrentMap[K, V]) GetShard(key K) *ConcurrentMapShared[K, V] {
 
 // Set
 //
-//	@Description:
+//	@Description: 设置值，如果key存在，返回旧的值 否则返回V的零值
 //	@receiver c
 //	@param key
 //	@param val
-func (c *ConcurrentMap[K, V]) Set(key K, val V) {
+func (c *ConcurrentMap[K, V]) Set(key K, val V) (oldValue V) {
 	shard := c.GetShard(key)
 	shard.Lock()
+	oldValue = shard.items[key]
 	shard.items[key] = val
 	shard.Unlock()
+	return oldValue
 }
 
 // Get
@@ -63,12 +65,12 @@ func (c *ConcurrentMap[K, V]) Get(key K, defaultVal ...V) (V, bool) {
 	val, ok := shard.items[key]
 	if !ok {
 		if len(defaultVal) > 0 {
-			return defaultVal[0], false
+			return defaultVal[0], ok
 		}
 		var v V
-		return v, false
+		return v, ok
 	}
-	return val, true
+	return val, ok
 }
 
 // Each

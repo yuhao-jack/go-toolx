@@ -37,18 +37,18 @@ func NewLruCache[K comparable, V any](cap int) *LruCache[K, V] {
 //	@receiver l
 //	@param key
 //	@return V 命中返回值 未命中返回V类型的的零值
-func (l *LruCache[K, V]) Get(key K, defaultVal ...V) V {
+func (l *LruCache[K, V]) Get(key K, defaultVal ...V) (V, bool) {
 	node, ok := l.Cache[key]
 	if !ok { //  Key不存在
 		if len(defaultVal) > 0 {
-			return defaultVal[0]
+			return defaultVal[0], ok
 		}
 		var v V
-		return v
+		return v, ok
 	}
 	// 如果 key 存在，先通过哈希表定位，再移到头部
 	l.moveToHead(node)
-	return node.Val
+	return node.Val, ok
 }
 
 // Put
