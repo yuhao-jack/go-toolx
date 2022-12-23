@@ -60,17 +60,17 @@ func (l *LfuCache[K, V]) Put(key K, val V) {
 //	@receiver l
 //	@param key 缓存key
 //	@return V 缓存的val 不存在时返回V的零值
-func (l *LfuCache[K, V]) Get(key K, defaultVal ...V) V {
+func (l *LfuCache[K, V]) Get(key K, defaultVal ...V) (V, bool) {
 	v, ok := l.cache[key]
 	if !ok {
 		if len(defaultVal) > 0 {
-			return defaultVal[0]
+			return defaultVal[0], ok
 		}
 		var v V
-		return v
+		return v, ok
 	}
 	l.addHitCount(key)
-	return v
+	return v, ok
 }
 
 // removeElement

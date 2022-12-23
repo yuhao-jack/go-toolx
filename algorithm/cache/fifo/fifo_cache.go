@@ -65,16 +65,16 @@ func (l *FifoCache[K, V]) String() string {
 //	@param key
 //	@param defaultVal 未命中返回V类型的的零值
 //	@return V 命中返回值 未命中返回V类型的的零值
-func (l *FifoCache[K, V]) Get(key K, defaultVal ...V) V {
+func (l *FifoCache[K, V]) Get(key K, defaultVal ...V) (V, bool) {
 	node, ok := l.cache[key]
 	if !ok { //  Key不存在
 		if len(defaultVal) > 0 {
-			return defaultVal[0]
+			return defaultVal[0], ok
 		}
 		var v V
-		return v
+		return v, ok
 	}
-	return node.Val
+	return node.Val, ok
 }
 
 // Put
